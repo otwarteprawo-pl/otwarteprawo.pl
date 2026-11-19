@@ -1,0 +1,37 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "otwarteprawo",
+  "version": "0.3.0",
+  "description": "Polskie akty prawne w brzmieniu na wybrany dzień, z serwera MCP otwarteprawo.pl: badanie przepisu po adresie i dacie, sprawdzenie cytowań w projekcie oraz brzmienie z dnia zdarzenia. / Polish law acts as they read on a date, through otwarteprawo.pl's MCP server: research by address and date, a citation check of a draft, and the text that applied on the date of an event.",
+  "author": {
+    "name": "Otwarte Prawo",
+    "url": "https://www.otwarteprawo.pl"
+  },
+  "homepage": "https://www.otwarteprawo.pl",
+  "repository": "https://github.com/otwarteprawo-pl/otwarteprawo.pl",
+  "license": "MIT",
+  "keywords": ["polish-law", "prawo", "prawo-polskie", "stan-prawny", "tekst-jednolity", "dziennik-ustaw", "legal-research", "mcp"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Otwarte Prawo",
+        "shortDescription": "Prawo na dzień · Law by date",
+        "longDescription": "Tekst polskich aktów prawnych w brzmieniu na wybrany dzień, z serwera MCP serwisu otwarteprawo.pl. Każdy przytoczony fragment ma swój eId, okres obowiązywania tego brzmienia, sposób sprawdzenia tekstu i link do PDF-u Dziennika Ustaw lub Monitora Polskiego, jedynego tekstu urzędowego. Trzy umiejętności: badanie przepisu po adresie i dacie, sprawdzenie cytowań w projekcie pisma na dzień oraz ustalenie, jakie brzmienie obowiązywało w dniu zdarzenia. Dla prawników, aplikantów i każdego, kto potrzebuje brzmienia przepisu na konkretny dzień. Wtyczka tylko czyta: nie wysyła pism, nie udziela porad prawnych i nie zastępuje tekstu urzędowego. Logowanie odbywa się adresem e-mail potwierdzanym przez otwarteprawo.pl.\n\nThe text of Polish law acts as it read on a chosen date, from otwarteprawo.pl's MCP server. Every quoted fragment carries its eId, the period that version was in force, how the text was verified, and a link to the PDF of the Dziennik Ustaw or Monitor Polski, the only legally authoritative text. Three skills: research by an act's address and a date, a citation check of a draft as of a date, and the text that applied on the date of an event. For lawyers, trainees and anyone who needs a provision as it read on a given day. The plugin only reads: it sends nothing, gives no legal advice, and does not replace the official text. Sign-in is by an e-mail address otwarteprawo.pl confirms.",
+        "developerName": "Otwarte Prawo",
+        "category": "Education & Research",
+        "websiteURL": "https://www.otwarteprawo.pl",
+        "privacyPolicyURL": "https://www.otwarteprawo.pl/prywatnosc",
+        "defaultPrompt": [
+          "Co mówił art. 1 ustawy Dz.U. 2016 poz. 1444 na dzień 9 października 2018 r.?",
+          "Sprawdź cytowania przepisów w tym projekcie pisma na dzień dzisiejszy.",
+          "Jakie brzmienie art. 299 ksh obowiązywało w dniu zawarcia umowy, 15 marca 2019 r.?"
+        ],
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      },
+      "publication": {
+        "countries": []
+      }
+    }
+  }
+}
