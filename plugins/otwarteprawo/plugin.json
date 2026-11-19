@@ -20,6 +20,7 @@
         "developerName": "Otwarte Prawo",
         "category": "Education & Research",
         "websiteURL": "https://www.otwarteprawo.pl",
+        "supportURL": "https://github.com/otwarteprawo-pl/otwarteprawo.pl/issues",
         "privacyPolicyURL": "https://www.otwarteprawo.pl/prywatnosc",
         "defaultPrompt": [
           "Co mówił art. 1 ustawy Dz.U. 2016 poz. 1444 na dzień 9 października 2018 r.?",
