@@ -1,0 +1,91 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "otwarteprawo",
+  "version": "0.3.0",
+  "description": "Polskie akty prawne w brzmieniu na wybrany dzień, z serwera MCP otwarteprawo.pl: badanie przepisu po adresie i dacie, sprawdzenie cytowań w projekcie oraz brzmienie z dnia zdarzenia. / Polish law acts as they read on a date, through otwarteprawo.pl's MCP server: research by address and date, a citation check of a draft, and the text that applied on the date of an event.",
+  "author": {
+    "name": "Otwarte Prawo",
+    "url": "https://www.otwarteprawo.pl"
+  },
+  "homepage": "https://www.otwarteprawo.pl",
+  "repository": "https://github.com/otwarteprawo-pl/otwarteprawo.pl",
+  "license": "MIT",
+  "keywords": ["polish-law", "prawo", "prawo-polskie", "stan-prawny", "tekst-jednolity", "dziennik-ustaw", "legal-research", "mcp"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Otwarte Prawo",
+        "shortDescription": "Prawo na dzień · Law by date",
+        "longDescription": "Tekst polskich aktów prawnych w brzmieniu na wybrany dzień, z serwera MCP serwisu otwarteprawo.pl. Każdy przytoczony fragment ma swój eId, okres obowiązywania tego brzmienia, sposób sprawdzenia tekstu i link do PDF-u Dziennika Ustaw lub Monitora Polskiego, jedynego tekstu urzędowego. Trzy umiejętności: badanie przepisu po adresie i dacie, sprawdzenie cytowań w projekcie pisma na dzień oraz ustalenie, jakie brzmienie obowiązywało w dniu zdarzenia. Dla prawników, aplikantów i każdego, kto potrzebuje brzmienia przepisu na konkretny dzień. Wtyczka tylko czyta: nie wysyła pism, nie udziela porad prawnych i nie zastępuje tekstu urzędowego. Logowanie odbywa się adresem e-mail potwierdzanym przez otwarteprawo.pl.\n\nThe text of Polish law acts as it read on a chosen date, from otwarteprawo.pl's MCP server. Every quoted fragment carries its eId, the period that version was in force, how the text was verified, and a link to the PDF of the Dziennik Ustaw or Monitor Polski, the only legally authoritative text. Three skills: research by an act's address and a date, a citation check of a draft as of a date, and the text that applied on the date of an event. For lawyers, trainees and anyone who needs a provision as it read on a given day. The plugin only reads: it sends nothing, gives no legal advice, and does not replace the official text. Sign-in is by an e-mail address otwarteprawo.pl confirms.",
+        "developerName": "Otwarte Prawo",
+        "category": "Education & Research",
+        "websiteURL": "https://www.otwarteprawo.pl",
+        "supportURL": "https://github.com/otwarteprawo-pl/otwarteprawo.pl/issues",
+        "privacyPolicyURL": "https://www.otwarteprawo.pl/prywatnosc",
+        "termsOfServiceURL": "https://www.otwarteprawo.pl/warunki",
+        "defaultPrompt": [
+          "Co mówił art. 1 ustawy Dz.U. 2016 poz. 1444 na dzień 9 października 2018 r.?",
+          "Sprawdź cytowania przepisów w tym projekcie pisma na dzień złożenia pisma.",
+          "Umowę zawarto 1 marca 2017 r. Jakie brzmienie art. 1 ust. 1 ustawy Dz.U. 2016 poz. 1444 obowiązywało w tym dniu?"
+        ],
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "research skill: a provision as it read on a past date, by the act's journal address.",
+              "prompt": "Co mówił art. 1 ustawy Dz.U. 2016 poz. 1444 na dzień 9 października 2018 r.?",
+              "tools_triggered": "get_provision",
+              "expected_behavior": "Quotes art. 1 (ust. 1 pkt 1-6 and ust. 2) of the ustawa o szczególnych rozwiązaniach związanych z wystąpieniem afrykańskiego pomoru świń word for word as the tool returns it: the version in force from 2018-10-09 to 2021-01-01, where ust. 1 covers \"mięso\" and \"produkty mięsne\". Names the eId art_1, says the text was cross-checked against the tekst jednolity Dz.U. 2019 poz. 988, and links the Dziennik Ustaw PDF https://api.sejm.gov.pl/eli/acts/DU/2016/1444/text.pdf as the only authoritative text. No wording comes from memory."
+            },
+            {
+              "description": "research skill: finding a provision by what it says, in Polish, then quoting it.",
+              "prompt": "Który przepis wyłącza stosowanie Prawa zamówień publicznych do zamówień na dostawy mięsa wieprzowego z obszarów objętych afrykańskim pomorem świń? Zacytuj go.",
+              "tools_triggered": "search_acts, get_provision",
+              "expected_behavior": "Names art. 1 ust. 1 of the ustawa o szczególnych rozwiązaniach związanych z wystąpieniem afrykańskiego pomoru świń (Dz.U. 2016 poz. 1444) and quotes it word for word from the newest tekst jednolity, Dz.U. 2021 poz. 1573, saying that this is the text quoted. Links that journal's PDF. The query sent to search_acts holds only the legal question."
+            },
+            {
+              "description": "applicable-text skill: the text that applied on the date of an event, and whether it changed afterwards.",
+              "prompt": "Umowę dostawy zawarto 1 marca 2017 r. Jakie brzmienie art. 1 ust. 1 ustawy Dz.U. 2016 poz. 1444 obowiązywało w tym dniu i czy zmieniło się do 9 października 2018 r.?",
+              "tools_triggered": "get_provision",
+              "expected_behavior": "Quotes art. 1 ust. 1 as published (in force 2016-09-13 to 2018-10-09), which covers only \"produkty mięsne\", then the version in force from 2018-10-09, which also covers \"mięso\", and shows the difference. Gives each version's period and links the Dziennik Ustaw PDF. Any reading of what the change means is labelled as the assistant's own."
+            },
+            {
+              "description": "citation-check skill: a draft's citations checked as of a date, with one outdated quotation and one unit that does not exist.",
+              "prompt": "Sprawdź cytowania w tym fragmencie pisma na dzień 1 czerwca 2019 r.: \"Zgodnie z art. 1 ust. 1 pkt 1 ustawy z dnia 5 września 2016 r. o szczególnych rozwiązaniach związanych z wystąpieniem afrykańskiego pomoru świń na terytorium Rzeczypospolitej Polskiej (Dz.U. 2016 poz. 1444) «świnie, od których pochodzą produkty mięsne, są zaopatrzone w świadectwo zdrowia wystawione przez urzędowego lekarza weterynarii na podstawie przepisów odrębnych». Obszary te określa rozporządzenie wydane na podstawie art. 1 ust. 3 tej ustawy.\"",
+              "tools_triggered": "search_acts, get_provision",
+              "expected_behavior": "Lists the two citations, then a table with one row each. Art. 1 ust. 1 pkt 1: problem, because the quotation does not match the text in force on 2019-06-01, which reads \"pochodzi mięso lub produkty mięsne\"; the difference is shown. Art. 1 ust. 3: problem, because the act has no such unit on that date (unknown-provision); the reading that the delegation is in art. 1 ust. 2 is labelled as the assistant's. Each row links the Dziennik Ustaw PDF. Only the citations, never the draft's text, are sent to the tools."
+            },
+            {
+              "description": "Absence reported as an absence, with the prompt in English: a date before the act was law.",
+              "prompt": "What did art. 1 of the Polish act Dz.U. 2016 poz. 1444 say on 1 January 2010?",
+              "tools_triggered": "get_provision",
+              "expected_behavior": "Answers in English that the act was not law on 2010-01-01: it has been in force since 2016-09-13. Quotes no text for that date and does not fill the gap from memory or a later version. Links the Dziennik Ustaw PDF."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Law outside the plugin's scope. The server holds Polish acts only, so the plugin should not call its tools; the assistant says the plugin covers Polish law and does not present any foreign text as coming from otwarteprawo.pl.",
+              "prompt": "What does Section 230 of the US Communications Decency Act say?"
+            },
+            {
+              "description": "An action the plugin cannot take. The plugin only reads law; it files and sends nothing. The assistant says it cannot file the pozew or send a copy, and calls no tool to try.",
+              "prompt": "Złóż ten pozew w e-Sądzie i wyślij kopię pełnomocnikowi strony przeciwnej."
+            },
+            {
+              "description": "Client facts kept out of the search. The plugin should not send the client's name, the company, the amount or the city to search_acts. It searches by the legal question only (for example a shareholder's or board member's liability for a company's debts) or asks the user for the provision's citation.",
+              "prompt": "Mój klient Jan Kowalski z Krakowa jest winien 250 000 zł spółce Przykład sp. z o.o. Wyszukaj przepisy, które mają zastosowanie do jego sprawy."
+            }
+          ]
+        },
+        "demo_recording_url": "https://drive.proton.me/urls/2DFWA441R4#vvB9Ec4OXeai"
+      },
+      "publication": {
+        "countries": [],
+        "release_notes": "0.3.0: pierwsze wydanie w katalogu wtyczek OpenAI. Serwer MCP otwarteprawo.pl (get_provision, search_acts, logowanie OAuth adresem e-mail) i trzy umiejętności: research, citation-check, applicable-text. / 0.3.0: first release in OpenAI's plugin directory. The otwarteprawo.pl MCP server (get_provision, search_acts, OAuth sign-in by e-mail) and three skills: research, citation-check, applicable-text."
+      }
+    }
+  }
+}

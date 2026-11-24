@@ -77,6 +77,13 @@ więc wtyczka i jej połączenie są tam od razu. To samo dotyczy dodatku Claude
 365 w Wordzie (sprawdzone w Wordzie w przeglądarce): wtyczka i jej łącznik są dostępne pod
 przyciskiem +. Cowork nie został jeszcze sprawdzony z tą wersją.
 
+### ChatGPT i Codex
+
+Ten sam katalog `plugins/otwarteprawo` jest też wtyczką do katalogu wtyczek OpenAI: plik
+`plugin.json` i `mcp.json` w jego głównym folderze oraz te same umiejętności w `skills/`.
+`scripts/openai-zip.sh` pakuje je do pliku ZIP, który przesyła się do OpenAI. Wtyczka nie
+figuruje jeszcze w katalogu OpenAI.
+
 ### Licencja
 
 MIT, zob. [LICENSE](LICENSE).
@@ -152,6 +159,13 @@ the plugin's Connectors tab. Claude Desktop shares the claude.ai account, so the
 its connection are already there. The same holds for the Claude for Microsoft 365 add-in in
 Word (tried in Word on the web): the plugin and its connector are under the + button. Cowork
 is not yet tried with this version.
+
+### ChatGPT and Codex
+
+The same `plugins/otwarteprawo` directory is also a plugin for OpenAI's plugin directory: the
+`plugin.json` and `mcp.json` at its root, and the same skills in `skills/`.
+`scripts/openai-zip.sh` packs them into the ZIP uploaded to OpenAI. The plugin is not yet
+listed in OpenAI's directory.
 
 ### License
 
