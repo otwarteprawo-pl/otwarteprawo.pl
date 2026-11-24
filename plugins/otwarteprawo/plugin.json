@@ -25,7 +25,7 @@
         "termsOfServiceURL": "https://www.otwarteprawo.pl/warunki",
         "defaultPrompt": [
           "Co mówił art. 1 ustawy Dz.U. 2016 poz. 1444 na dzień 9 października 2018 r.?",
-          "Sprawdź cytowania przepisów w tym projekcie pisma na dzień dzisiejszy.",
+          "Sprawdź cytowania przepisów w tym projekcie pisma na dzień złożenia pisma.",
           "Umowę zawarto 1 marca 2017 r. Jakie brzmienie art. 1 ust. 1 ustawy Dz.U. 2016 poz. 1444 obowiązywało w tym dniu?"
         ],
         "composerIcon": "./assets/icon.png",
