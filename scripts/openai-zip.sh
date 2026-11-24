@@ -2,8 +2,8 @@
 # Packs the ChatGPT plugin for OpenAI's plugin directory from plugins/otwarteprawo.
 # The Claude plugin and the ChatGPT plugin share that directory and its skills/; the
 # ZIP takes only OpenAI's files: the root plugin.json and mcp.json, skills/ and
-# assets/. zip stores the file a symlink points at, so assets/icon.png is the
-# Claude plugin's icon.
+# assets/. assets/icon.png is a copy of the Claude plugin's .claude-plugin/icon.png,
+# not a link: Anthropic's directory refuses a plugin that holds a symbolic link.
 set -eu
 root=$(cd "$(dirname "$0")/.." && pwd)
 out="$root/otwarteprawo-openai.zip"
