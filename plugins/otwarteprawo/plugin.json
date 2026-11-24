@@ -22,6 +22,7 @@
         "websiteURL": "https://www.otwarteprawo.pl",
         "supportURL": "https://github.com/otwarteprawo-pl/otwarteprawo.pl/issues",
         "privacyPolicyURL": "https://www.otwarteprawo.pl/prywatnosc",
+        "termsOfServiceURL": "https://www.otwarteprawo.pl/warunki",
         "defaultPrompt": [
           "Co mówił art. 1 ustawy Dz.U. 2016 poz. 1444 na dzień 9 października 2018 r.?",
           "Sprawdź cytowania przepisów w tym projekcie pisma na dzień dzisiejszy.",
